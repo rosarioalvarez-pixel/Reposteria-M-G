@@ -41,6 +41,22 @@ body{
   background:linear-gradient(180deg,var(--bg),var(--soft));
   color:var(--text);
   transition:.4s;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* OVERLAY IMAGE */
+.overlay-bg{
+  position:fixed;
+  inset:0;
+  background:url("https://iili.io/fZg0FdF.md.jpg") center/420px no-repeat;
+  opacity:.08;
+  pointer-events:none;
+  z-index:0;
+}
+body.dark .overlay-bg{
+  opacity:.05;
+  filter:brightness(1.2);
 }
 
 /* HEADER */
@@ -77,6 +93,8 @@ body.dark header{background:rgba(31,28,27,.85)}
   max-width:1100px;
   margin:auto;
   padding:36px 18px;
+  position:relative;
+  z-index:1;
 }
 .hero-card{
   background:var(--pink-soft);
@@ -90,6 +108,8 @@ body.dark header{background:rgba(31,28,27,.85)}
   max-width:1100px;
   margin:auto;
   padding:46px 18px 0;
+  position:relative;
+  z-index:1;
 }
 .section h2{text-align:center}
 .subtitle{
@@ -175,6 +195,8 @@ footer{
   padding:22px;
   text-align:center;
   background:var(--card);
+  position:relative;
+  z-index:1;
 }
 footer small{color:var(--muted)}
 
@@ -199,6 +221,8 @@ footer small{color:var(--muted)}
 </head>
 
 <body>
+
+<div class="overlay-bg"></div>
 
 <header>
   <div class="brand">
