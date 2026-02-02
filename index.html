@@ -10,24 +10,21 @@
 <style>
 :root{
   --bg:#ffffff;
-  --soft:#f9f4f2;
   --card:#ffffff;
-  --text:#5c3b2e;
-  --muted:#8f6b5a;
-  --pink:#f4a7b9;
-  --pink-soft:#fdecef;
-  --shadow:0 12px 28px rgba(0,0,0,.1);
+  --text:#5a3a2e;
+  --muted:#8a6a5c;
+  --pink:#f2a7b8;
+  --soft:#fdf2f5;
+  --shadow:0 12px 26px rgba(0,0,0,.1);
   --radius:22px;
 }
 
 body.dark{
   --bg:#1f1c1b;
-  --soft:#2a2523;
-  --card:#2f2a28;
+  --card:#2b2726;
   --text:#f5ece8;
   --muted:#c7b1a7;
-  --pink:#e39aaa;
-  --pink-soft:#3a2e31;
+  --soft:#2a2423;
 }
 
 *{
@@ -38,7 +35,7 @@ body.dark{
 }
 
 body{
-  background:linear-gradient(180deg,var(--bg),var(--soft));
+  background:var(--bg);
   color:var(--text);
   transition:.4s;
 }
@@ -70,9 +67,9 @@ body.dark header{background:rgba(31,28,27,.9)}
   font-size:1.2rem;
   transition:.4s;
 }
-.theme-btn.rotate{transform:rotate(360deg)}
+.theme-btn.spin{transform:rotate(360deg)}
 
-/* HERO — SOLUCIÓN REAL */
+/* HERO SIN OVERLAY */
 .hero{
   min-height:85vh;
   display:flex;
@@ -80,30 +77,20 @@ body.dark header{background:rgba(31,28,27,.9)}
   justify-content:center;
   padding:40px 20px;
   text-align:center;
-
-  background-image:
-    linear-gradient(rgba(255,255,255,.88),rgba(255,255,255,.88)),
-    url("https://iili.io/fZg0FdF.md.jpg");
+  background-image:url("https://iili.io/fZg0FdF.md.jpg");
   background-size:cover;
   background-position:center;
-  background-blend-mode:lighten;
-}
-
-body.dark .hero{
-  background-image:
-    linear-gradient(rgba(30,26,25,.88),rgba(30,26,25,.88)),
-    url("https://iili.io/fZg0FdF.md.jpg");
 }
 
 .hero-box{
-  background:var(--pink-soft);
+  background:var(--card);
   padding:36px;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   max-width:520px;
 }
 
-/* SECTIONS */
+/* SECCIONES */
 .section{
   max-width:1100px;
   margin:auto;
@@ -154,14 +141,14 @@ button{
   cursor:pointer;
 }
 
-/* MAP */
+/* MAPA */
 .map{
   border-radius:var(--radius);
   overflow:hidden;
   box-shadow:var(--shadow);
 }
 
-/* SIDE INFO */
+/* INFO LATERAL */
 .side-info{
   position:fixed;
   top:50%;
@@ -183,7 +170,7 @@ footer{
 }
 footer small{color:var(--muted)}
 
-/* ANIMACIONES */
+/* ANIMACIONES SCROLL */
 .reveal{
   opacity:0;
   transform:translateY(40px);
@@ -263,8 +250,8 @@ footer small{color:var(--muted)}
 const btn=document.getElementById("themeBtn");
 btn.onclick=()=>{
   document.body.classList.toggle("dark");
-  btn.classList.add("rotate");
-  setTimeout(()=>btn.classList.remove("rotate"),400);
+  btn.classList.add("spin");
+  setTimeout(()=>btn.classList.remove("spin"),400);
   btn.textContent=document.body.classList.contains("dark")?"☀️":"🌙";
 };
 
@@ -278,10 +265,10 @@ Mensaje: ${m.value}`;
   window.open("https://wa.me/5491122865748?text="+encodeURIComponent(msg));
 }
 
-const reveals=document.querySelectorAll(".reveal");
-const onScroll=()=>reveals.forEach(el=>{
-  if(el.getBoundingClientRect().top<window.innerHeight-80){
-    el.classList.add("active");
+const items=document.querySelectorAll(".reveal");
+const onScroll=()=>items.forEach(i=>{
+  if(i.getBoundingClientRect().top<window.innerHeight-80){
+    i.classList.add("active");
   }
 });
 window.addEventListener("scroll",onScroll);
