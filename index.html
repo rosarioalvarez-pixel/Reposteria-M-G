@@ -41,92 +41,98 @@ body{
   background:linear-gradient(180deg,var(--bg),var(--soft));
   color:var(--text);
   transition:.4s;
-  position:relative;
   overflow-x:hidden;
-}
-
-/* OVERLAY IMAGE (MÁS OPACIDAD) */
-.overlay-bg{
-  position:fixed;
-  inset:0;
-  background:url("https://iili.io/fZg0FdF.md.jpg") center/420px no-repeat;
-  opacity:.18; /* ⬅️ MÁS VISIBLE */
-  pointer-events:none;
-  z-index:0;
-}
-body.dark .overlay-bg{
-  opacity:.12;
-  filter:brightness(1.15);
 }
 
 /* HEADER */
 header{
   position:sticky;
   top:0;
-  z-index:50;
-  background:rgba(255,255,255,.85);
+  z-index:100;
+  background:rgba(255,255,255,.9);
   backdrop-filter:blur(10px);
   padding:14px 18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-body.dark header{background:rgba(31,28,27,.85)}
+body.dark header{background:rgba(31,28,27,.9)}
 
 .brand strong{font-size:1.2rem}
 .brand span{font-size:.85rem;color:var(--muted)}
 
 .theme-btn{
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
   border-radius:50%;
   background:var(--pink);
   border:none;
   cursor:pointer;
-  font-size:1.3rem;
-  transition:.5s;
+  font-size:1.2rem;
+  transition:.4s;
 }
-.theme-btn.rotate{transform:rotate(360deg) scale(1.1)}
+.theme-btn.rotate{transform:rotate(360deg)}
 
-/* HERO */
+/* HERO CON OVERLAY CORRECTO */
 .hero{
-  max-width:1100px;
-  margin:auto;
-  padding:36px 18px;
+  position:relative;
+  min-height:85vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+  overflow:hidden;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.85),rgba(255,255,255,.85)),
+    url("https://iili.io/fZg0FdF.md.jpg") center/cover no-repeat;
+  z-index:0;
+}
+
+body.dark .hero::before{
+  background:
+    linear-gradient(rgba(30,26,25,.85),rgba(30,26,25,.85)),
+    url("https://iili.io/fZg0FdF.md.jpg") center/cover no-repeat;
+}
+
+.hero-content{
   position:relative;
   z-index:1;
-}
-.hero-card{
   background:var(--pink-soft);
-  padding:34px;
+  padding:36px;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
+  max-width:520px;
 }
 
 /* SECTIONS */
 .section{
   max-width:1100px;
   margin:auto;
-  padding:46px 18px 0;
-  position:relative;
-  z-index:1;
+  padding:60px 20px 0;
 }
 .section h2{text-align:center}
 .subtitle{
   text-align:center;
   color:var(--muted);
-  margin:8px 0 26px;
+  margin:10px 0 30px;
 }
 
-/* PRODUCTS */
+/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 .card{
   background:var(--card);
-  padding:22px;
+  padding:26px;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   text-align:center;
@@ -135,18 +141,18 @@ body.dark header{background:rgba(31,28,27,.85)}
 /* FORM */
 form{
   background:var(--card);
-  padding:28px;
+  padding:30px;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   display:grid;
   gap:14px;
 }
-form input,form textarea,form select{
+input,select,textarea{
   padding:14px;
   border-radius:14px;
   border:1px solid #ddd;
 }
-form button{
+button{
   padding:14px;
   border-radius:999px;
   border:none;
@@ -157,17 +163,10 @@ form button{
 }
 
 /* MAP */
-.map-card{
-  background:var(--card);
+.map{
   border-radius:var(--radius);
-  box-shadow:var(--shadow);
   overflow:hidden;
-}
-.map-card iframe{width:100%;height:280px;border:none}
-.map-info{
-  padding:18px;
-  text-align:center;
-  font-weight:600;
+  box-shadow:var(--shadow);
 }
 
 /* SIDE INFO */
@@ -177,55 +176,127 @@ form button{
   right:0;
   transform:translateY(-50%);
   background:var(--card);
-  padding:18px 16px;
-  border-radius:20px 0 0 20px;
+  padding:16px;
+  border-radius:18px 0 0 18px;
   box-shadow:var(--shadow);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:100;
   font-size:.9rem;
 }
 .side-info strong{color:var(--pink)}
-.side-info a{text-decoration:none}
 
 /* FOOTER */
 footer{
-  margin-top:50px;
-  padding:22px;
+  margin-top:60px;
+  padding:24px;
   text-align:center;
   background:var(--card);
-  position:relative;
-  z-index:1;
 }
 footer small{color:var(--muted)}
 
-/* SCROLL ANIMATIONS */
+/* ANIMACIONES */
 .reveal{
   opacity:0;
   transform:translateY(40px);
-  transition:1s ease;
+  transition:1s;
 }
 .reveal.active{
   opacity:1;
   transform:none;
-}
-.reveal.zoom{transform:scale(.9)}
-.reveal.zoom.active{transform:scale(1)}
-
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr}
-  .side-info{display:none}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay-bg"></div>
+<header>
+  <div class="brand">
+    <strong>Repostería M&G</strong><br>
+    <span>Tortas personalizadas</span>
+  </div>
+  <button class="theme-btn" id="themeBtn">🌙</button>
+</header>
 
-<!-- RESTO DEL CONTENIDO SIN CAMBIOS -->
-<!-- (todo lo demás sigue igual que antes) -->
+<section class="hero">
+  <div class="hero-content reveal">
+    <h1>Dulces artesanales</h1>
+    <p>
+      Tortas personalizadas, tartas, pastafrolas y brownies<br><br>
+      📍 Barrio Matera – Merlo<br>
+      🚚 Envíos a domicilio
+    </p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <h2>Productos</h2>
+  <p class="subtitle">Repostería hecha a pedido</p>
+  <div class="grid">
+    <div class="card">🎂 Tortas personalizadas</div>
+    <div class="card">🍓 Tartas</div>
+    <div class="card">🍫 Brownies</div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <h2>Hacé tu pedido</h2>
+  <form onsubmit="pedido(event)">
+    <input id="n" placeholder="Nombre" required>
+    <input id="t" placeholder="Teléfono" required>
+    <select id="p">
+      <option>Torta personalizada</option>
+      <option>Tarta</option>
+      <option>Brownies</option>
+    </select>
+    <textarea id="m" placeholder="Detalles"></textarea>
+    <button>Enviar por WhatsApp</button>
+  </form>
+</section>
+
+<section class="section reveal">
+  <h2>Ubicación</h2>
+  <p class="subtitle">Barrio Matera – Merlo</p>
+  <div class="map">
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.74,-34.665,-58.735,-34.662&layer=mapnik" width="100%" height="280"></iframe>
+  </div>
+</section>
+
+<footer>
+  © 2026 · Repostería M&G<br>
+  <small>Creado y diseñado por R.A Studio</small>
+</footer>
+
+<div class="side-info">
+  <strong>📍 Barrio Matera</strong><br>
+  🚚 Envíos a domicilio
+</div>
+
+<script>
+const btn=document.getElementById("themeBtn");
+btn.onclick=()=>{
+  document.body.classList.toggle("dark");
+  btn.classList.add("rotate");
+  setTimeout(()=>btn.classList.remove("rotate"),400);
+  btn.textContent=document.body.classList.contains("dark")?"☀️":"🌙";
+};
+
+function pedido(e){
+  e.preventDefault();
+  const msg=`Hola! Quiero hacer un pedido:
+Nombre: ${n.value}
+Teléfono: ${t.value}
+Producto: ${p.value}
+Mensaje: ${m.value}`;
+  window.open("https://wa.me/5491122865748?text="+encodeURIComponent(msg));
+}
+
+const reveals=document.querySelectorAll(".reveal");
+const onScroll=()=>reveals.forEach(el=>{
+  if(el.getBoundingClientRect().top<window.innerHeight-80){
+    el.classList.add("active");
+  }
+});
+window.addEventListener("scroll",onScroll);
+onScroll();
+</script>
 
 </body>
 </html>
