@@ -47,7 +47,7 @@ body{
 header{
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:50;
   background:rgba(255,255,255,.85);
   backdrop-filter:blur(10px);
   padding:14px 18px;
@@ -98,6 +98,20 @@ body.dark header{background:rgba(31,28,27,.85)}
   margin:8px 0 26px;
 }
 
+/* PRODUCTS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.card{
+  background:var(--card);
+  padding:22px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+
 /* FORM */
 form{
   background:var(--card);
@@ -136,6 +150,25 @@ form button{
   font-weight:600;
 }
 
+/* SIDE INFO */
+.side-info{
+  position:fixed;
+  top:50%;
+  right:0;
+  transform:translateY(-50%);
+  background:var(--card);
+  padding:18px 16px;
+  border-radius:20px 0 0 20px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:100;
+  font-size:.9rem;
+}
+.side-info strong{color:var(--pink)}
+.side-info a{text-decoration:none}
+
 /* FOOTER */
 footer{
   margin-top:50px;
@@ -145,7 +178,7 @@ footer{
 }
 footer small{color:var(--muted)}
 
-/* ===== SCROLL ANIMATIONS ===== */
+/* SCROLL ANIMATIONS */
 .reveal{
   opacity:0;
   transform:translateY(40px);
@@ -155,19 +188,12 @@ footer small{color:var(--muted)}
   opacity:1;
   transform:none;
 }
+.reveal.zoom{transform:scale(.9)}
+.reveal.zoom.active{transform:scale(1)}
 
-.reveal.zoom{
-  transform:scale(.9);
-}
-.reveal.zoom.active{
-  transform:scale(1);
-}
-
-.reveal.left{
-  transform:translateX(-60px);
-}
-.reveal.right{
-  transform:translateX(60px);
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .side-info{display:none}
 }
 </style>
 </head>
@@ -194,8 +220,18 @@ footer small{color:var(--muted)}
 </section>
 
 <section class="section reveal">
+  <h2>Nuestros productos</h2>
+  <p class="subtitle">Repostería artesanal a pedido</p>
+  <div class="grid">
+    <div class="card">🎂 Tortas personalizadas</div>
+    <div class="card">🍓 Tartas y pastafrolas</div>
+    <div class="card">🍫 Brownies</div>
+  </div>
+</section>
+
+<section class="section reveal">
   <h2>Formulario de pedidos</h2>
-  <p class="subtitle">Completá los datos y te respondemos por WhatsApp</p>
+  <p class="subtitle">Te respondemos por WhatsApp</p>
 
   <form onsubmit="enviarPedido(event)">
     <input id="nombre" placeholder="Nombre" required>
@@ -216,8 +252,7 @@ footer small{color:var(--muted)}
 <section class="section reveal">
   <h2>Dónde estamos</h2>
   <p class="subtitle">Barrio Matera – Merlo</p>
-
-  <div class="map-card reveal zoom">
+  <div class="map-card zoom reveal">
     <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.740%2C-34.665%2C-58.735%2C-34.662&layer=mapnik"></iframe>
     <div class="map-info">📍 Barrio Matera – Merlo</div>
   </div>
@@ -227,6 +262,14 @@ footer small{color:var(--muted)}
   © 2026 · Repostería M&G<br>
   <small>Creado y diseñado por R.A Studio</small>
 </footer>
+
+<div class="side-info">
+  <strong>📍 Barrio Matera</strong>
+  <span>Merlo</span>
+  <span>🚚 Envíos a domicilio</span>
+  <a href="https://wa.me/5491122865748" target="_blank">💬 WhatsApp</a>
+  <a href="https://instagram.com/reposteriam_g" target="_blank">📸 Instagram</a>
+</div>
 
 <script>
 /* THEME */
@@ -256,12 +299,11 @@ Mensaje: ${mensaje.value}`;
   window.open("https://wa.me/5491122865748?text="+encodeURIComponent(msg));
 }
 
-/* SCROLL REVEAL */
+/* SCROLL */
 const reveals=document.querySelectorAll(".reveal");
 const revealOnScroll=()=>{
   reveals.forEach(el=>{
-    const top=el.getBoundingClientRect().top;
-    if(top<window.innerHeight-80){
+    if(el.getBoundingClientRect().top<window.innerHeight-80){
       el.classList.add("active");
     }
   });
